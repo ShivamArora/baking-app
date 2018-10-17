@@ -1,5 +1,6 @@
-package com.shivora.example.bakingapp.views;
+package com.shivora.example.bakingapp.views.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.shivora.example.bakingapp.R;
+import com.shivora.example.bakingapp.adapters.RecipeStepsAdapter;
 import com.shivora.example.bakingapp.adapters.RecipesListAdapter;
 import com.shivora.example.bakingapp.models.Recipe;
 import com.shivora.example.bakingapp.networking.NetworkingUtils;
@@ -27,6 +29,7 @@ import retrofit2.Retrofit;
 public class RecipeListActivity extends AppCompatActivity implements RecipesListAdapter.OnRecipeClickListener {
 
     public static final String TAG = RecipeListActivity.class.getSimpleName();
+    public static final String EXTRA_RECIPE_DETAILS = "extra_recipe_details";
     @BindView(R.id.rv_recipes_list)
     RecyclerView rvRecipesList;
 
@@ -79,9 +82,6 @@ public class RecipeListActivity extends AppCompatActivity implements RecipesList
         });
 
         Log.d(TAG, "Fetching Recipes List");
-        /*for (Recipe recipe: recipeList){
-            Log.d(TAG, "Recipe: "+recipe.getName());
-        }*/
     }
 
     private void setRecipesList(List<Recipe> recipeList) {
@@ -91,5 +91,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipesList
     @Override
     public void onRecipeClicked(int position) {
         Log.i(TAG, "onRecipeClicked: "+position);
+        Intent intent = new Intent(RecipeListActivity.this,RecipeStepsActivity.class);
+        intent.putExtra(EXTRA_RECIPE_DETAILS,recipeList.get(position));
+        startActivity(intent);
     }
 }
