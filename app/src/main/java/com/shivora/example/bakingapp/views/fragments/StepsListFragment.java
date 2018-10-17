@@ -1,5 +1,7 @@
 package com.shivora.example.bakingapp.views.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +25,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+@SuppressLint("ValidFragment")
 public class StepsListFragment extends Fragment implements RecipeStepsAdapter.OnRecipeStepClickListener {
+
+    public interface OnStepChangedListener{
+        void onStepChange(int stepPosition);
+    }
 
     public static final String TAG = StepsListFragment.class.getSimpleName();
     @BindView(R.id.tv_ingredients)
@@ -33,9 +40,21 @@ public class StepsListFragment extends Fragment implements RecipeStepsAdapter.On
 
     RecipeStepsAdapter adapter;
     Recipe mRecipe;
+    OnStepChangedListener mOnStepChangedListener;
 
     public StepsListFragment(Recipe recipe){
         mRecipe = recipe;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try{
+            mOnStepChangedListener = (OnStepChangedListener) context;
+        }
+        catch (ClassCastException e){
+            throw new ClassCastException(context.toString()+" must implement OnStepChangedListener");
+        }
     }
 
     @Nullable
@@ -58,5 +77,6 @@ public class StepsListFragment extends Fragment implements RecipeStepsAdapter.On
     @Override
     public void onRecipeStepClicked(int position) {
         Log.i(TAG, "onRecipeStepClicked: "+position);
+        mOnStepChangedListener.onStepChange(position);
     }
 }

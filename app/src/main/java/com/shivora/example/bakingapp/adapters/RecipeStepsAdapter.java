@@ -2,6 +2,7 @@ package com.shivora.example.bakingapp.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import butterknife.ButterKnife;
 
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeStepsViewHolder> {
 
+    public static final String TAG = RecipeStepsAdapter.class.getSimpleName();
+
     public interface OnRecipeStepClickListener{
         void onRecipeStepClicked(int position);
     }
@@ -24,8 +27,8 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
     List<RecipeStep> mRecipeSteps;
     OnRecipeStepClickListener mOnRecipeStepClickListener;
     public RecipeStepsAdapter(List<RecipeStep> steps,OnRecipeStepClickListener onRecipeStepClickListener){
-        mRecipeSteps = steps;
-        mOnRecipeStepClickListener = onRecipeStepClickListener;
+        this.mRecipeSteps = steps;
+        this.mOnRecipeStepClickListener = onRecipeStepClickListener;
     }
 
     @NonNull
@@ -52,6 +55,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         TextView tvShortDescription;
         public RecipeStepsViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             ButterKnife.bind(this,itemView);
         }
 
@@ -63,6 +67,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
+            Log.i(TAG, "onClick: "+position);
             mOnRecipeStepClickListener.onRecipeStepClicked(position);
         }
     }
