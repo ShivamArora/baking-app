@@ -1,7 +1,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#09C"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/widget_background"
     android:id="@+id/widget_layout">
 
     <LinearLayout
@@ -15,25 +16,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Last viewed recipe:"
+            android:layout_margin="@dimen/dp_8"
+            android:text="@string/last_viewed_recipe"
             android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/tv_widget_recipe_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Recipe Name"
-            android:textColor="#ffffff"
+            android:layout_margin="@dimen/dp_8"
+            tools:text="Recipe Name"
+            android:textColor="@android:color/white"
             android:textSize="24sp"
             android:textStyle="bold|italic" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="Ingredients:"
+            android:layout_margin="@dimen/dp_8"
+            android:text="@string/ingredients_heading"
             android:textColor="@android:color/white"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -43,8 +44,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_widget_recipe_name"
-            android:layout_margin="8dp"
-            android:text="Recipe ingredients"
+            android:layout_margin="@dimen/dp_8"
+            tools:text="List of ingredients"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
@@ -54,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="No recipe has been viewed yet\nClick here to view the recipe list."
+        android:text="@string/no_recipe_viewed_error"
         android:textColor="@android:color/white"
         android:visibility="visible" />
 </FrameLayout>
