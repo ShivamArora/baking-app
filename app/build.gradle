@@ -54,4 +54,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.2'
 
+    //Gson for storing recipe in sharedPrefs
+    implementation 'com.google.code.gson:gson:2.8.5'
+
 }
