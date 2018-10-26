@@ -39,7 +39,7 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsListF
             saveLastViewedRecipeDetails();
             setTitle(mRecipe.getName());
 
-            StepsListFragment stepsListFragment = new StepsListFragment(mRecipe);
+            StepsListFragment stepsListFragment = StepsListFragment.newInstance(mRecipe);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()

@@ -30,6 +30,11 @@ import butterknife.ButterKnife;
 @SuppressLint("ValidFragment")
 public class StepDetailFragment extends Fragment {
 
+    public static final String EXTRA_FRAGMENT_RECIPE_STEP = "extra_fragment_recipe_step";
+    public static final String EXTRA_FRAGMENT_STEP_POSITION = "extra_fragment_step_position";
+
+    public StepDetailFragment(){}
+
     public static final String TAG = StepDetailFragment.class.getSimpleName();
     @BindView(R.id.player_view)
     PlayerView playerView;
@@ -40,9 +45,9 @@ public class StepDetailFragment extends Fragment {
     @BindView(R.id.fab_previous)
     FloatingActionButton fabPrevious;
 
-    RecipeStep mRecipeStep;
-    int mPosition;
-    StepsListFragment.OnStepChangedListener mOnStepChangedListener;
+    static RecipeStep mRecipeStep;
+    static int mPosition;
+    static StepsListFragment.OnStepChangedListener mOnStepChangedListener;
     private SimpleExoPlayer exoPlayer;
 
     @SuppressLint("ValidFragment")
@@ -57,24 +62,33 @@ public class StepDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_details,container,false);
         ButterKnife.bind(this,rootView);
-
+        if (savedInstanceState!=null){
+            mRecipeStep = savedInstanceState.getParcelable(EXTRA_FRAGMENT_RECIPE_STEP);
+            mPosition = savedInstanceState.getInt(EXTRA_FRAGMENT_STEP_POSITION);
+        }
 
         tvInstructions.setText(mRecipeStep.getDescription());
         fabNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnStepChangedListener.onStepChange(mPosition+1);
+                mOnStepChangedListener.onStepChange(++mPosition);
             }
         });
         fabPrevious.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnStepChangedListener.onStepChange(mPosition-1);
+                mOnStepChangedListener.onStepChange(--mPosition);
             }
         });
         return rootView;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(EXTRA_FRAGMENT_RECIPE_STEP,mRecipeStep);
+        outState.putInt(EXTRA_FRAGMENT_STEP_POSITION,mPosition);
+        super.onSaveInstanceState(outState);
+    }
     @Override
     public void onStart() {
         super.onStart();

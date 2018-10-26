@@ -28,6 +28,9 @@ import butterknife.ButterKnife;
 @SuppressLint("ValidFragment")
 public class StepsListFragment extends Fragment implements RecipeStepsAdapter.OnRecipeStepClickListener {
 
+    public static final String EXTRA_FRAGMENT_RECIPE = "extra_fragment_recipe";
+
+    public StepsListFragment(){}
     public interface OnStepChangedListener{
         void onStepChange(int stepPosition);
     }
@@ -42,8 +45,12 @@ public class StepsListFragment extends Fragment implements RecipeStepsAdapter.On
     Recipe mRecipe;
     OnStepChangedListener mOnStepChangedListener;
 
-    public StepsListFragment(Recipe recipe){
-        mRecipe = recipe;
+    public static final StepsListFragment newInstance(Recipe recipe){
+        StepsListFragment fragment = new StepsListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(EXTRA_FRAGMENT_RECIPE,recipe);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -62,6 +69,7 @@ public class StepsListFragment extends Fragment implements RecipeStepsAdapter.On
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_steps_list,container,false);
         ButterKnife.bind(this,rootView);
+        mRecipe = getArguments().getParcelable(EXTRA_FRAGMENT_RECIPE);
         getActivity().setTitle(mRecipe.getName());
         for (RecipeIngredient ingredient: mRecipe.getIngredients()){
             tvIngredients.append(ingredient.getQuantity()+" "+ingredient.getMeasure()+" "+ingredient.getIngredient()+"\n");
