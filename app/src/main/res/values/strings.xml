@@ -6,4 +6,5 @@
     <string name="last_viewed_recipe">Last viewed recipe:</string>
     <string name="ingredients_heading">Ingredients:</string>
     <string name="no_recipe_viewed_error">No recipe has been viewed yet Click here to view the recipe list.</string>
+    <string name="no_video_url">No Video URL Found!</string>
 </resources>

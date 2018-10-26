@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -127,6 +128,7 @@ public class StepDetailFragment extends Fragment {
                 exoPlayer.setPlayWhenReady(true);
             }
             else{
+                Toast.makeText(getActivity(), getString(R.string.no_video_url), Toast.LENGTH_LONG).show();
                 Log.e(TAG, "initExoPlayer: No Video URL Found!");
             }
         }
