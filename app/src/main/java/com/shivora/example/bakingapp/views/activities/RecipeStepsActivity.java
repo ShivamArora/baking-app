@@ -24,10 +24,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RecipeStepsActivity extends AppCompatActivity implements StepsListFragment.OnStepChangedListener {
 
     public static final String TAG = RecipeStepsActivity.class.getSimpleName();
-    public static final String KEY_RECIPE_POSITION = "key_recipe_position";
-    public static final String KEY_RECIPE_NAME = "key_recipe_name";
-    public static final String KEY_RECIPE_INGREDIENTS = "key_recipe_ingredients";
     public static final String KEY_RECIPE = "key_recipe";
+
     Recipe mRecipe;
     boolean mIsTwoPaned;
     @Override
@@ -39,6 +37,8 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsListF
         if (intent != null) {
             mRecipe = intent.getParcelableExtra(RecipeListActivity.EXTRA_RECIPE_DETAILS);
             saveLastViewedRecipeDetails();
+            setTitle(mRecipe.getName());
+
             StepsListFragment stepsListFragment = new StepsListFragment(mRecipe);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -94,7 +94,9 @@ public class RecipeStepsActivity extends AppCompatActivity implements StepsListF
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction()
                         .replace(R.id.steps_fragment_container, stepDetailFragment)
+                        .addToBackStack("steps")
                         .commit();
+                setTitle(mRecipe.getSteps().get(position).getShortDescription());
             }
         }
     }

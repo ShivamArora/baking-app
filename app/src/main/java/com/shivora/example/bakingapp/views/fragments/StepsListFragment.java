@@ -62,7 +62,7 @@ public class StepsListFragment extends Fragment implements RecipeStepsAdapter.On
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_steps_list,container,false);
         ButterKnife.bind(this,rootView);
-
+        getActivity().setTitle(mRecipe.getName());
         for (RecipeIngredient ingredient: mRecipe.getIngredients()){
             tvIngredients.append(ingredient.getQuantity()+" "+ingredient.getMeasure()+" "+ingredient.getIngredient()+"\n");
         }
